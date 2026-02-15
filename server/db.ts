@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, isNull } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, courses, events, batches, teamMembers, communityInfo } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,80 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Courses queries
+export async function getCourses(featured?: boolean) {
+  const db = await getDb();
+  if (!db) return [];
+  const query = db.select().from(courses).where(isNull(courses.deletedAt));
+  if (featured) {
+    return await db.select().from(courses).where(isNull(courses.deletedAt));
+  }
+  return await query;
+}
+
+export async function getCourseById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(courses).where(eq(courses.id, id)).limit(1);
+  return result[0];
+}
+
+// Events queries
+export async function getEvents(featured?: boolean) {
+  const db = await getDb();
+  if (!db) return [];
+  const query = db.select().from(events).where(isNull(events.deletedAt));
+  if (featured) {
+    return await db.select().from(events).where(isNull(events.deletedAt));
+  }
+  return await query;
+}
+
+export async function getEventById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(events).where(eq(events.id, id)).limit(1);
+  return result[0];
+}
+
+// Batches queries
+export async function getBatches() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(batches).where(isNull(batches.deletedAt));
+}
+
+export async function getBatchById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(batches).where(eq(batches.id, id)).limit(1);
+  return result[0];
+}
+
+// Team members queries
+export async function getTeamMembers() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(teamMembers).where(isNull(teamMembers.deletedAt)).orderBy(teamMembers.order);
+}
+
+export async function getTeamMemberById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(teamMembers).where(eq(teamMembers.id, id)).limit(1);
+  return result[0];
+}
+
+// Community info queries
+export async function getCommunityInfo(key: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(communityInfo).where(eq(communityInfo.key, key)).limit(1);
+  return result[0];
+}
+
+export async function getAllCommunityInfo() {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select().from(communityInfo);
+}
