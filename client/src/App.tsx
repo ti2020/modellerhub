@@ -16,7 +16,10 @@ import Mission from "./pages/Mission";
 import Modeling from "./pages/Modeling";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminCourses from "./pages/AdminCourses";
-import AdminExport from "./pages/AdminExport";
+import AdminEvents from "./pages/AdminEvents";
+import AdminBatches from "./pages/AdminBatches";
+import AdminTeam from "./pages/AdminTeam";
+import AdminCommunity from "./pages/AdminCommunity";
 
 function Router() {
   return (
@@ -30,7 +33,10 @@ function Router() {
       <Route path="/modeling" component={Modeling} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/courses" component={AdminCourses} />
-      <Route path="/admin/export" component={AdminExport} />
+      <Route path="/admin/events" component={AdminEvents} />
+      <Route path="/admin/batches" component={AdminBatches} />
+      <Route path="/admin/team" component={AdminTeam} />
+      <Route path="/admin/community" component={AdminCommunity} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

@@ -4,7 +4,7 @@ import { trpc } from '@/lib/trpc';
 import { Loader2, Users } from 'lucide-react';
 
 export default function Batches() {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, pick } = useLanguage();
   const { data: batches, isLoading } = trpc.content.getBatches.useQuery();
 
   const formatDate = (date: any) => {
@@ -52,7 +52,7 @@ export default function Batches() {
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between mb-2">
                     <CardTitle className="text-[#002B5C] text-lg">
-                      {batch.nameEn || batch.nameAr}
+                      {pick(batch, 'name')}
                     </CardTitle>
                     <span className={`text-xs font-bold px-3 py-1 rounded-full ${getStatusColor(batch.enrollmentStatus)}`}>
                       {batch.enrollmentStatus.toUpperCase()}
@@ -61,7 +61,7 @@ export default function Batches() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 text-sm mb-4">
-                    {batch.descriptionEn || batch.descriptionAr}
+                    {pick(batch, 'description')}
                   </p>
                   <div className={`space-y-3 text-sm ${isRTL ? 'text-right' : ''}`}>
                     <div className="flex items-center justify-between">

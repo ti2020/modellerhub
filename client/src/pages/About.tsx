@@ -4,7 +4,7 @@ import { trpc } from '@/lib/trpc';
 import { Loader2 } from 'lucide-react';
 
 export default function About() {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, pick } = useLanguage();
   const { data: teamMembers, isLoading } = trpc.content.getTeamMembers.useQuery();
 
   const founders = teamMembers?.filter((m: any) => m.role === 'founder') || [];
@@ -26,19 +26,19 @@ export default function About() {
                 <div className="w-full h-48 bg-gray-200 overflow-hidden">
                   <img
                     src={member.photoUrl}
-                    alt={member.nameEn || member.nameAr}
+                    alt={pick(member, 'name')}
                     className="w-full h-full object-cover"
                   />
                 </div>
               )}
               <CardHeader className="pb-2">
                 <CardTitle className="text-[#002B5C]">
-                  {member.nameEn || member.nameAr}
+                  {pick(member, 'name')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-600 mb-3">
-                  {member.bioEn || member.bioAr}
+                  {pick(member, 'bio')}
                 </p>
                 {member.credentials && (
                   <div className="pt-3 border-t">

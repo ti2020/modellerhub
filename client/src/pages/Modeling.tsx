@@ -5,7 +5,7 @@ import { Loader2, TrendingUp, BarChart3, PieChart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function Modeling() {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, pick } = useLanguage();
   const [modelingInfo, setModelingInfo] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -41,12 +41,12 @@ export default function Modeling() {
             <Card className="border-0 bg-white shadow-lg mb-12">
               <CardHeader className="bg-gradient-to-r from-[#002B5C] to-[#003d7a] text-white pb-6">
                 <CardTitle className="text-2xl">
-                  {modelingInfo?.titleEn || modelingInfo?.titleAr || 'Financial Modeling Field'}
+                  {pick(modelingInfo, 'title') || 'Financial Modeling Field'}
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-8">
                 <p className={`text-gray-700 leading-relaxed text-lg mb-6 ${isRTL ? 'text-right' : ''}`}>
-                  {modelingInfo?.contentEn || modelingInfo?.contentAr || 'Financial modeling is a comprehensive field that encompasses...'}
+                  {pick(modelingInfo, 'content') || 'Financial modeling is a comprehensive field that encompasses...'}
                 </p>
               </CardContent>
             </Card>

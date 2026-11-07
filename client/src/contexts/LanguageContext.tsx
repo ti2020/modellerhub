@@ -7,6 +7,8 @@ interface LanguageContextType {
   setLanguage: (lang: Language) => void;
   isRTL: boolean;
   t: (key: string, defaultValue?: string) => string;
+  /** Picks row[`${base}Ar`] or row[`${base}En`] for the current language, falling back to the other. */
+  pick: (row: Record<string, any> | null | undefined, base: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -17,7 +19,10 @@ const translations: Record<Language, Record<string, string>> = {
     'home.slogan': 'We Thrive Together',
     'home.subtitle': "Modeller's Homeland",
     'home.description': 'Connecting the Architects of Finance - A premier professional collective dedicated to elevating financial modeling standards.',
-    'home.joinWhatsApp': 'Join Our WhatsApp Community',
+    'home.joinTelegram': 'Join Us on Telegram',
+    'home.ctaTitle': 'Ready to Join?',
+    'home.ctaText': 'Connect with a network of financial modeling professionals and elevate your skills.',
+    'footer.community': 'Community',
     'home.featuredCourses': 'Featured Courses',
     'home.featuredEvents': 'Featured Events',
     'home.exploreCourses': 'Explore All Courses',
@@ -39,7 +44,10 @@ const translations: Record<Language, Record<string, string>> = {
     'home.slogan': 'نحن ننمو معاً',
     'home.subtitle': 'وطن المُحلِّل',
     'home.description': 'ربط معماري التمويل - مجموعة احترافية رائدة مكرسة لرفع معايير النمذجة المالية.',
-    'home.joinWhatsApp': 'انضم إلى مجتمعنا على واتس آب',
+    'home.joinTelegram': 'انضم إلينا على تيليجرام',
+    'home.ctaTitle': 'مستعد للانضمام؟',
+    'home.ctaText': 'تواصل مع شبكة من محترفي النمذجة المالية وارتقِ بمهاراتك.',
+    'footer.community': 'المجتمع',
     'home.featuredCourses': 'الدورات المميزة',
     'home.featuredEvents': 'الأحداث المميزة',
     'home.exploreCourses': 'استكشف جميع الدورات',
@@ -82,8 +90,14 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const isRTL = language === 'ar';
 
+  const pick = (row: Record<string, any> | null | undefined, base: string): string => {
+    if (!row) return '';
+    const [first, second] = isRTL ? ['Ar', 'En'] : ['En', 'Ar'];
+    return row[base + first] || row[base + second] || '';
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, isRTL, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, isRTL, t, pick }}>
       {children}
     </LanguageContext.Provider>
   );
