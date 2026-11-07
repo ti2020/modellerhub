@@ -5,7 +5,7 @@ import { Loader2, Target, Eye } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function Mission() {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, pick } = useLanguage();
   const [mission, setMission] = useState<any>(null);
   const [vision, setVision] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -43,13 +43,13 @@ export default function Mission() {
                 <div className="flex items-center gap-3">
                   <Target size={32} className="text-[#C5A065]" />
                   <CardTitle className="text-2xl">
-                    {mission?.titleEn || mission?.titleAr || 'Our Mission'}
+                    {pick(mission, 'title') || 'Our Mission'}
                   </CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="pt-6">
                 <p className={`text-gray-700 leading-relaxed text-lg ${isRTL ? 'text-right' : ''}`}>
-                  {mission?.contentEn || mission?.contentAr || 'Mission statement coming soon.'}
+                  {pick(mission, 'content') || 'Mission statement coming soon.'}
                 </p>
               </CardContent>
             </Card>
@@ -60,13 +60,13 @@ export default function Mission() {
                 <div className="flex items-center gap-3">
                   <Eye size={32} className="text-[#C5A065]" />
                   <CardTitle className="text-2xl">
-                    {vision?.titleEn || vision?.titleAr || 'Our Vision'}
+                    {pick(vision, 'title') || 'Our Vision'}
                   </CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="pt-6">
                 <p className={`text-gray-700 leading-relaxed text-lg ${isRTL ? 'text-right' : ''}`}>
-                  {vision?.contentEn || vision?.contentAr || 'Vision statement coming soon.'}
+                  {pick(vision, 'content') || 'Vision statement coming soon.'}
                 </p>
               </CardContent>
             </Card>

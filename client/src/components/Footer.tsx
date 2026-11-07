@@ -1,3 +1,4 @@
+import { TELEGRAM_URL } from '@/const';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Footer() {
@@ -28,17 +29,17 @@ export default function Footer() {
 
           {/* Community */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-[#C5A065]">Community</h3>
+            <h3 className="text-lg font-bold mb-4 text-[#C5A065]">{t('footer.community')}</h3>
             <p className="text-gray-300 text-sm mb-4">
-              {t('home.joinWhatsApp')}
+              {t('home.joinTelegram')}
             </p>
             <a
-              href="https://lnkd.in/dBir95J3"
+              href={TELEGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-[#C5A065] text-black px-4 py-2 rounded-md font-medium hover:bg-[#b39456] transition-colors text-sm"
             >
-              WhatsApp
+              Telegram
             </a>
           </div>
         </div>

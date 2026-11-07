@@ -4,7 +4,7 @@ import { trpc } from '@/lib/trpc';
 import { Loader2, Calendar, MapPin, User } from 'lucide-react';
 
 export default function Events() {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, pick } = useLanguage();
   const { data: events, isLoading } = trpc.content.getAllEvents.useQuery();
 
   const formatDate = (date: any) => {
@@ -40,7 +40,7 @@ export default function Events() {
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between mb-2">
                     <CardTitle className="text-[#002B5C] text-lg">
-                      {event.titleEn || event.titleAr}
+                      {pick(event, 'title')}
                     </CardTitle>
                     {event.featured && (
                       <span className="bg-[#C5A065] text-black text-xs font-bold px-2 py-1 rounded">
@@ -51,7 +51,7 @@ export default function Events() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 text-sm mb-4">
-                    {event.descriptionEn || event.descriptionAr}
+                    {pick(event, 'description')}
                   </p>
                   <div className={`space-y-2 text-sm ${isRTL ? 'text-right' : ''}`}>
                     {event.eventDate && (

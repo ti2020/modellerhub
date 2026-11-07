@@ -1,3 +1,4 @@
+import { TELEGRAM_URL } from '@/const';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,7 +7,7 @@ import { Link } from 'wouter';
 import { Loader2, ArrowRight } from 'lucide-react';
 
 export default function Home() {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, pick } = useLanguage();
   const { data: courses, isLoading: coursesLoading } = trpc.content.getFeaturedCourses.useQuery();
   const { data: events, isLoading: eventsLoading } = trpc.content.getFeaturedEvents.useQuery();
 
@@ -35,12 +36,12 @@ export default function Home() {
               </p>
               <div className={`flex gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <a
-                  href="https://lnkd.in/dBir95J3"
+                  href={TELEGRAM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-[#C5A065] text-black px-6 py-3 rounded-lg font-bold hover:bg-[#b39456] transition-colors"
                 >
-                  {t('home.joinWhatsApp')}
+                  {t('home.joinTelegram')}
                   <ArrowRight size={20} />
                 </a>
                 <Link href="/courses">
@@ -90,7 +91,7 @@ export default function Home() {
                 <Card key={course.id} className="hover:shadow-lg transition-shadow border-0 bg-white">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-[#002B5C]">
-                      {course.titleEn || course.titleAr}
+                      {pick(course, 'title')}
                     </CardTitle>
                     <CardDescription className="text-[#C5A065] font-medium">
                       {course.duration}
@@ -98,7 +99,7 @@ export default function Home() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 text-sm mb-4">
-                      {course.descriptionEn || course.descriptionAr}
+                      {pick(course, 'description')}
                     </p>
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-semibold text-[#002B5C] bg-gray-100 px-3 py-1 rounded-full">
@@ -147,7 +148,7 @@ export default function Home() {
                 <Card key={event.id} className="hover:shadow-lg transition-shadow border-0 bg-white">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-[#002B5C]">
-                      {event.titleEn || event.titleAr}
+                      {pick(event, 'title')}
                     </CardTitle>
                     <CardDescription className="text-[#C5A065] font-medium">
                       {event.eventDate && new Date(event.eventDate).toLocaleDateString()}
@@ -155,7 +156,7 @@ export default function Home() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 text-sm mb-4">
-                      {event.descriptionEn || event.descriptionAr}
+                      {pick(event, 'description')}
                     </p>
                     {event.speaker && (
                       <p className="text-xs text-[#002B5C] font-semibold">
@@ -182,17 +183,17 @@ export default function Home() {
       {/* CTA Section */}
       <section className="bg-[#002B5C] text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to Join?</h2>
+          <h2 className="text-4xl font-bold mb-6">{t('home.ctaTitle')}</h2>
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-            Connect with a global network of financial modeling professionals and elevate your skills.
+            {t('home.ctaText')}
           </p>
           <a
-            href="https://lnkd.in/dBir95J3"
+            href={TELEGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-[#C5A065] text-black px-8 py-4 rounded-lg font-bold hover:bg-[#b39456] transition-colors text-lg"
           >
-            Join Our WhatsApp Community
+            {t('home.joinTelegram')}
           </a>
         </div>
       </section>

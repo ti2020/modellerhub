@@ -4,7 +4,7 @@ import { trpc } from '@/lib/trpc';
 import { Loader2 } from 'lucide-react';
 
 export default function Courses() {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, pick } = useLanguage();
   const { data: courses, isLoading } = trpc.content.getAllCourses.useQuery();
 
   return (
@@ -31,7 +31,7 @@ export default function Courses() {
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between mb-2">
                     <CardTitle className="text-[#002B5C] text-lg">
-                      {course.titleEn || course.titleAr}
+                      {pick(course, 'title')}
                     </CardTitle>
                     {course.featured && (
                       <span className="bg-[#C5A065] text-black text-xs font-bold px-2 py-1 rounded">
@@ -45,7 +45,7 @@ export default function Courses() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 text-sm mb-4">
-                    {course.descriptionEn || course.descriptionAr}
+                    {pick(course, 'description')}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <span className="text-xs font-semibold text-[#002B5C] bg-gray-100 px-3 py-1 rounded-full">
