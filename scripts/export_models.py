@@ -168,6 +168,25 @@ def format_value(v, fmt):
     return ("-" + s) if v < 0 and len(secs) < 2 else s
 
 # ---------- export ----------
+PLAN = {p["slug"]: p for p in json.load(open("/home/claude/spell_plan.json"))} if os.path.exists("/home/claude/spell_plan.json") else {}
+
+def missing_cache_values(slug):
+    """Formula cells in the corrected copy that have no cached value yet (cells we repaired):
+    take the value from the LibreOffice full recalculation of that copy."""
+    rc = f"/tmp/sp_rc/{slug}__out.xlsx"
+    if slug not in PLAN or not os.path.exists(rc):
+        return {}
+    src = PLAN[slug]["out"]
+    wf = openpyxl.load_workbook(src); wv = openpyxl.load_workbook(src, data_only=True)
+    lo = openpyxl.load_workbook(rc, data_only=True)
+    out = {}
+    for ws in wf.worksheets:
+        for row in ws.iter_rows():
+            for c in row:
+                if isinstance(c.value, str) and c.value.startswith("=") and wv[ws.title][c.coordinate].value is None:
+                    out[(ws.title, c.coordinate)] = lo[ws.title][c.coordinate].value
+    return out
+
 def patch_values(o_name):
     """Cells whose value changed between the LibreOffice recalc of the original and of the fixed copy."""
     if not o_name:
@@ -184,10 +203,11 @@ def patch_values(o_name):
     return out
 
 def export(slug, name, path, accent, patch_from):
-    full = B + path
+    # Prefer the corrected copy (Excel errors + spelling fixed) when it exists.
+    full = PLAN[slug]["out"] if slug in PLAN else B + path
     palette = theme_palette(full)
     wv = openpyxl.load_workbook(full, data_only=True)
-    patches = patch_values(patch_from)
+    patches = missing_cache_values(slug) if slug in PLAN else patch_values(patch_from)
     styles, style_ids = [], {}
 
     def sid(cell):
