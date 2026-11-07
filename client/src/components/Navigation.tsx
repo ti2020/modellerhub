@@ -11,6 +11,7 @@ export default function Navigation() {
   const navItems = [
     { label: t('nav.home'), href: '/' },
     { label: t('nav.courses'), href: '/courses' },
+    { label: t('nav.models'), href: '/models' },
     { label: t('nav.events'), href: '/events' },
     { label: t('nav.batches'), href: '/batches' },
     { label: t('nav.about'), href: '/about' },

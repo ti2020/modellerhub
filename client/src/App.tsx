@@ -6,6 +6,8 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import Navigation from "./components/Navigation";
+import Models from "./pages/Models";
+import ModelViewer from "./pages/ModelViewer";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
@@ -31,6 +33,8 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/mission" component={Mission} />
       <Route path="/modeling" component={Modeling} />
+      <Route path="/models" component={Models} />
+      <Route path="/models/:slug" component={ModelViewer} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/courses" component={AdminCourses} />
       <Route path="/admin/events" component={AdminEvents} />
