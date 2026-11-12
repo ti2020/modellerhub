@@ -1,4 +1,5 @@
 import { useAuth } from '@/_core/hooks/useAuth';
+import { getLoginUrl } from '@/const';
 import { Button } from '@/components/ui/button';
 import { Menu, X, LogOut } from 'lucide-react';
 import { useState } from 'react';
@@ -9,21 +10,37 @@ interface AdminLayoutProps {
 }
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
-  const { user, logout } = useAuth();
+  const { user, loading, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [location] = useLocation();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <p className="text-gray-600">Loading…</p>
+      </div>
+    );
+  }
 
   if (!user || user.role !== 'admin') {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-[#002B5C] mb-4">Access Denied</h1>
-          <p className="text-gray-600 mb-6">You do not have permission to access the admin panel.</p>
-          <Link href="/">
-            <a className="inline-block bg-[#002B5C] text-white px-6 py-2 rounded-lg hover:bg-[#003d7a] transition-colors">
-              Return Home
+          <h1 className="text-3xl font-bold text-[#002B5C] mb-4">ModellerHub Admin</h1>
+          <p className="text-gray-600 mb-6">Sign in with an approved Google account to manage the site.</p>
+          <div className="flex gap-3 justify-center">
+            <a
+              href={getLoginUrl()}
+              className="inline-block bg-[#002B5C] text-white px-6 py-2 rounded-lg hover:bg-[#003d7a] transition-colors"
+            >
+              Sign in with Google
             </a>
-          </Link>
+            <Link href="/">
+              <a className="inline-block border border-[#002B5C] text-[#002B5C] px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                Return Home
+              </a>
+            </Link>
+          </div>
         </div>
       </div>
     );

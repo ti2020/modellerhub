@@ -1,3 +1,4 @@
+import { TELEGRAM_URL } from '@/const';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -35,12 +36,12 @@ export default function Home() {
               </p>
               <div className={`flex gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <a
-                  href="https://lnkd.in/dBir95J3"
+                  href={TELEGRAM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-[#C5A065] text-black px-6 py-3 rounded-lg font-bold hover:bg-[#b39456] transition-colors"
                 >
-                  {t('home.joinWhatsApp')}
+                  {t('home.joinTelegram')}
                   <ArrowRight size={20} />
                 </a>
                 <Link href="/courses">
@@ -187,12 +188,12 @@ export default function Home() {
             Connect with a global network of financial modeling professionals and elevate your skills.
           </p>
           <a
-            href="https://lnkd.in/dBir95J3"
+            href={TELEGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-[#C5A065] text-black px-8 py-4 rounded-lg font-bold hover:bg-[#b39456] transition-colors text-lg"
           >
-            Join Our WhatsApp Community
+            {t('home.joinTelegram')}
           </a>
         </div>
       </section>
