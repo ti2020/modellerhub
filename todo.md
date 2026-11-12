@@ -26,7 +26,7 @@
 - [x] Implement home/welcome page with hero section featuring "We Thrive Together"
 - [x] Add featured courses section on home page
 - [x] Add featured events section on home page
-- [x] Add WhatsApp join link (https://lnkd.in/dBir95J3) prominently on home page
+- [x] Add Telegram join link (https://t.me/Modeller_AFM_bot) prominently on home page
 - [x] Create courses listing page with filters
 - [x] Create events listing page with calendar view
 - [x] Create batches listing page
@@ -52,7 +52,7 @@
 - [ ] Implement Word document export for course materials
 - [ ] Implement PDF certificate generation
 - [ ] Implement email signature template generation
-- [ ] Implement WhatsApp graphics generation (announcements, polls, celebrations)
+- [ ] Implement Telegram graphics generation (announcements, polls, celebrations)
 - [x] Create branded template system with logo and color scheme
 - [ ] Add download functionality for all exported formats
 
@@ -60,7 +60,7 @@
 - [x] Apply navy blue (#002B5C) and white color scheme throughout
 - [x] Implement gold (#C5A065) accents for CTAs and highlights
 - [x] Ensure responsive design for mobile and desktop
-- [x] Optimize WhatsApp mobile experience
+- [x] Optimize Telegram mobile experience
 - [x] Add smooth transitions and micro-interactions
 - [x] Test color contrast for accessibility
 
@@ -82,6 +82,6 @@
 ## Notes
 - Color Palette: Navy Blue (#002B5C), White (#FFFFFF), Gold (#C5A065), Light Gray (#F4F6F8)
 - Languages: Arabic (RTL), English (LTR)
-- WhatsApp Link: https://lnkd.in/dBir95J3
+- Telegram: https://t.me/Modeller_AFM_bot
 - Community Slogan: "We Thrive Together"
 - Target Users: Financial modeling professionals, students, community members

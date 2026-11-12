@@ -34,7 +34,7 @@ export default function ExportTemplates() {
     },
     {
       icon: Image,
-      title: 'WhatsApp Graphics',
+      title: 'Telegram Graphics',
       description: 'Social media graphics for announcements and events',
       format: 'PNG/JPG',
       action: 'Export Graphics',
