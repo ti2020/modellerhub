@@ -11,7 +11,7 @@ function createAdminContext(): { ctx: TrpcContext } {
     openId: 'admin-user',
     email: 'admin@example.com',
     name: 'Admin User',
-    loginMethod: 'manus',
+    loginMethod: 'google',
     role: 'admin',
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -36,7 +36,7 @@ function createUserContext(): { ctx: TrpcContext } {
     openId: 'regular-user',
     email: 'user@example.com',
     name: 'Regular User',
-    loginMethod: 'manus',
+    loginMethod: 'google',
     role: 'user',
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -126,7 +126,7 @@ describe('API Procedures', () => {
         });
         expect.fail('Should have thrown authorization error');
       } catch (error: any) {
-        expect(error.message).toContain('Unauthorized');
+        expect(error.message).toContain('permission');
       }
     });
   });

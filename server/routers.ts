@@ -1,7 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
+import { adminProcedure, publicProcedure, router } from "./_core/trpc";
 import { getCourses, getCourseById, getEvents, getEventById, getBatches, getTeamMembers, getCommunityInfo, getDb } from "./db";
 import { z } from "zod";
 import { courses, events, batches, teamMembers, communityInfo, type InsertCourse } from "../drizzle/schema";
@@ -21,7 +21,7 @@ export const appRouter = router({
   }),
 
   admin: router({
-    createCourse: protectedProcedure
+    createCourse: adminProcedure
       .input(z.object({
         titleEn: z.string(),
         titleAr: z.string(),
@@ -32,14 +32,13 @@ export const appRouter = router({
         level: z.enum(["beginner", "intermediate", "advanced"]).default("beginner"),
         featured: z.number().default(0),
       }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database unavailable");
         await db.insert(courses).values(input as InsertCourse);
         return { success: true };
       }),
-    updateCourse: protectedProcedure
+    updateCourse: adminProcedure
       .input(z.object({
         id: z.number(),
         titleEn: z.string().optional(),
@@ -51,18 +50,16 @@ export const appRouter = router({
         level: z.enum(["beginner", "intermediate", "advanced"]).optional(),
         featured: z.number().optional(),
       }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database unavailable");
         const { id, ...data } = input;
         await db.update(courses).set(data).where(eq(courses.id, id));
         return { success: true };
       }),
-    deleteCourse: protectedProcedure
+    deleteCourse: adminProcedure
       .input(z.object({ id: z.number() }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database unavailable");
         await db.update(courses).set({ deletedAt: new Date() as any }).where(eq(courses.id, input.id));
