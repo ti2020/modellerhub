@@ -138,15 +138,39 @@ export default function ModelViewer() {
                         const st = raw !== undefined && typeof raw !== 'string' ? data.styles[raw[1]] : undefined;
                         const sp = mergeInfo.span.get(key);
                         const rs = sp ? Array.from({ length: sp.rs }, (_, k) => row.r + k).filter(r => shownRows.has(r)).length : 1;
+                        // Like Excel, left-aligned text spills over the empty cells to its right.
+                        const align = st?.a ?? 'left';
+                        let spill = 0;
+                        if (text && !sp && align === 'left') {
+                          const at = visibleCols.indexOf(col);
+                          for (let k = at + 1; k < visibleCols.length; k++) {
+                            const next = visibleCols[k];
+                            const nk = `${row.r}:${next.n}`;
+                            const nraw = row.c[next.n - 1];
+                            const ntext = nraw === undefined ? '' : typeof nraw === 'string' ? nraw : nraw[0];
+                            if (ntext || mergeInfo.covered.has(nk) || mergeInfo.span.has(nk)) break;
+                            spill += next.w;
+                          }
+                        }
+                        const css = cellStyle(st, col.w);
                         return (
                           <td
                             key={key}
                             colSpan={sp?.cs}
                             rowSpan={rs > 1 ? rs : undefined}
-                            className="border border-gray-100 px-1.5 py-0.5 whitespace-nowrap overflow-hidden text-ellipsis"
-                            style={cellStyle(st, col.w)}
+                            className={`border border-gray-100 px-1.5 py-0.5 whitespace-nowrap ${spill ? 'relative overflow-visible' : 'overflow-hidden text-ellipsis'}`}
+                            style={spill ? { ...css, height: 22 } : css}
                           >
-                            {text}
+                            {spill ? (
+                              <span
+                                className="absolute inset-y-0 left-0 z-[1] flex items-center overflow-hidden"
+                                style={{ width: col.w + spill, paddingLeft: css.paddingLeft ?? 6 }}
+                              >
+                                {text}
+                              </span>
+                            ) : (
+                              text
+                            )}
                           </td>
                         );
                       })}
