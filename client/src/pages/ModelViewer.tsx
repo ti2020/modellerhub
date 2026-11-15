@@ -4,7 +4,7 @@ import { ArrowLeft, Loader2, Lock } from 'lucide-react';
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { Link, useParams } from 'wouter';
 
-type Style = { b?: 1; i?: 1; u?: 1; c?: string; s?: number; bg?: string; a?: 'left' | 'center' | 'right'; in?: number; bt?: number; bb?: number };
+type Style = { b?: 1; i?: 1; u?: 1; c?: string; s?: number; bg?: string; a?: 'left' | 'center' | 'right' | 'cc'; in?: number; bt?: number; bb?: number };
 type Cell = string | [string, number];
 type Sheet = { name: string; cols: { w: number; h: boolean }[]; rows: { r: number; c: Cell[] }[]; merges: number[][]; tab: string | null };
 type ModelData = { styles: Style[]; sheets: Sheet[] };
@@ -24,7 +24,7 @@ function cellStyle(st: Style | undefined, width: number): CSSProperties {
   if (st.c) css.color = `#${st.c}`;
   if (st.s) css.fontSize = Math.max(11, Math.min(20, Math.round(st.s * 1.15)));
   if (st.bg) css.background = `#${st.bg}`;
-  if (st.a) css.textAlign = st.a;
+  if (st.a) css.textAlign = st.a === 'cc' ? 'center' : st.a;
   if (st.in) css.paddingLeft = 6 + st.in * 10;
   if (st.bt) css.borderTop = `${st.bt}px solid #333`;
   if (st.bb) css.borderBottom = `${st.bb}px solid #333`;
@@ -138,10 +138,11 @@ export default function ModelViewer() {
                         const st = raw !== undefined && typeof raw !== 'string' ? data.styles[raw[1]] : undefined;
                         const sp = mergeInfo.span.get(key);
                         const rs = sp ? Array.from({ length: sp.rs }, (_, k) => row.r + k).filter(r => shownRows.has(r)).length : 1;
-                        // Like Excel, left-aligned text spills over the empty cells to its right.
+                        // Like Excel, left-aligned text spills over the empty cells to its right,
+                        // and "centre across selection" text centres over its run of empty cells.
                         const align = st?.a ?? 'left';
                         let spill = 0;
-                        if (text && !sp && align === 'left') {
+                        if (text && !sp && (align === 'left' || align === 'cc')) {
                           const at = visibleCols.indexOf(col);
                           for (let k = at + 1; k < visibleCols.length; k++) {
                             const next = visibleCols[k];
@@ -149,6 +150,10 @@ export default function ModelViewer() {
                             const nraw = row.c[next.n - 1];
                             const ntext = nraw === undefined ? '' : typeof nraw === 'string' ? nraw : nraw[0];
                             if (ntext || mergeInfo.covered.has(nk) || mergeInfo.span.has(nk)) break;
+                            if (align === 'cc') {
+                              const nst = nraw !== undefined && typeof nraw !== 'string' ? data.styles[nraw[1]] : undefined;
+                              if (nst?.a !== 'cc') break;
+                            }
                             spill += next.w;
                           }
                         }
@@ -163,8 +168,8 @@ export default function ModelViewer() {
                           >
                             {spill ? (
                               <span
-                                className="absolute inset-y-0 left-0 z-[1] flex items-center overflow-hidden"
-                                style={{ width: col.w + spill, paddingLeft: css.paddingLeft ?? 6 }}
+                                className={`absolute inset-y-0 left-0 z-[1] flex items-center overflow-hidden ${align === 'cc' ? 'justify-center' : ''}`}
+                                style={{ width: col.w + spill, paddingLeft: align === 'cc' ? 0 : css.paddingLeft ?? 6 }}
                               >
                                 {text}
                               </span>
