@@ -4,6 +4,7 @@ import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerGoogleAuthRoutes } from "./googleAuth";
+import { runMigrations } from "./migrate";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
@@ -28,6 +29,9 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
+  if (process.env.NODE_ENV !== "development") {
+    await runMigrations();
+  }
   const app = express();
   // Railway (and most hosts) terminate TLS at a proxy; trust it so req.protocol is https.
   app.set("trust proxy", 1);
@@ -67,4 +71,7 @@ async function startServer() {
   });
 }
 
-startServer().catch(console.error);
+startServer().catch(error => {
+  console.error(error);
+  process.exit(1);
+});
