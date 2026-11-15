@@ -14,6 +14,8 @@ import Batches from "./pages/Batches";
 import About from "./pages/About";
 import Mission from "./pages/Mission";
 import Modeling from "./pages/Modeling";
+import Models from "./pages/Models";
+import ModelViewer from "./pages/ModelViewer";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminCourses from "./pages/AdminCourses";
 import AdminExport from "./pages/AdminExport";
@@ -28,6 +30,8 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/mission" component={Mission} />
       <Route path="/modeling" component={Modeling} />
+      <Route path="/models" component={Models} />
+      <Route path="/models/:slug" component={ModelViewer} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/courses" component={AdminCourses} />
       <Route path="/admin/export" component={AdminExport} />
