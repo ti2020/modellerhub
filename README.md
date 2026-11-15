@@ -35,6 +35,6 @@ Only emails in `ADMIN_EMAILS` can sign in. Access is re-checked on every request
    - `DATABASE_URL` = `${{MySQL.MYSQL_URL}}`
    - `JWT_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `ADMIN_EMAILS`
    - `PUBLIC_URL` = the service's public domain (Settings → Networking → Generate domain)
-4. Deploy. `railway.json` builds with `pnpm build`, runs migrations before each deploy (`pnpm db:migrate`), starts with `pnpm start`, and health-checks `/api/health`.
+4. Deploy. `railway.json` builds with `pnpm build`, applies database migrations automatically when the server starts, starts with `pnpm start`, and health-checks `/api/health`.
 
 The Telegram bot can run as a second service in the same Railway project and share the MySQL database.
