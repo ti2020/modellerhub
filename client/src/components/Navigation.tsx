@@ -16,6 +16,7 @@ export default function Navigation() {
     { label: t('nav.about'), href: '/about' },
     { label: t('nav.mission'), href: '/mission' },
     { label: t('nav.modeling'), href: '/modeling' },
+    { label: t('nav.models'), href: '/models' },
   ];
 
   return (
