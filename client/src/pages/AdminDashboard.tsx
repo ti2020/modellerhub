@@ -2,6 +2,7 @@ import AdminLayout from '@/components/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { trpc } from '@/lib/trpc';
 import { BookOpen, Calendar, Users, Layers } from 'lucide-react';
+import { Link } from 'wouter';
 
 export default function AdminDashboard() {
   const coursesQuery = trpc.content.getAllCourses.useQuery();
@@ -70,36 +71,21 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <a
-                href="/admin/courses"
-                className="p-4 border-2 border-[#002B5C] rounded-lg hover:bg-[#002B5C] hover:text-white transition-colors text-center font-semibold"
-              >
-                Manage Courses
-              </a>
-              <a
-                href="/admin/events"
-                className="p-4 border-2 border-[#002B5C] rounded-lg hover:bg-[#002B5C] hover:text-white transition-colors text-center font-semibold"
-              >
-                Manage Events
-              </a>
-              <a
-                href="/admin/batches"
-                className="p-4 border-2 border-[#002B5C] rounded-lg hover:bg-[#002B5C] hover:text-white transition-colors text-center font-semibold"
-              >
-                Manage Batches
-              </a>
-              <a
-                href="/admin/team"
-                className="p-4 border-2 border-[#002B5C] rounded-lg hover:bg-[#002B5C] hover:text-white transition-colors text-center font-semibold"
-              >
-                Manage Team
-              </a>
-              <a
-                href="/admin/community"
-                className="p-4 border-2 border-[#002B5C] rounded-lg hover:bg-[#002B5C] hover:text-white transition-colors text-center font-semibold"
-              >
-                Community Info
-              </a>
+              <Link href="/admin/courses">
+                <a className="p-4 border-2 border-[#002B5C] rounded-lg hover:bg-[#002B5C] hover:text-white transition-colors text-center font-semibold">Manage Courses</a>
+              </Link>
+              <Link href="/admin/events">
+                <a className="p-4 border-2 border-[#002B5C] rounded-lg hover:bg-[#002B5C] hover:text-white transition-colors text-center font-semibold">Manage Events</a>
+              </Link>
+              <Link href="/admin/batches">
+                <a className="p-4 border-2 border-[#002B5C] rounded-lg hover:bg-[#002B5C] hover:text-white transition-colors text-center font-semibold">Manage Batches</a>
+              </Link>
+              <Link href="/admin/team">
+                <a className="p-4 border-2 border-[#002B5C] rounded-lg hover:bg-[#002B5C] hover:text-white transition-colors text-center font-semibold">Manage Team</a>
+              </Link>
+              <Link href="/admin/community">
+                <a className="p-4 border-2 border-[#002B5C] rounded-lg hover:bg-[#002B5C] hover:text-white transition-colors text-center font-semibold">Community Info</a>
+              </Link>
             </div>
           </CardContent>
         </Card>
@@ -118,7 +104,7 @@ export default function AdminDashboard() {
                 Use the navigation menu on the left to manage courses, events, batches, and community information.
               </p>
               <p>
-                All changes are saved automatically to the database and will be reflected on the public website immediately.
+                Changes are saved to the database and appear on the public website straight away.
               </p>
             </div>
           </CardContent>
