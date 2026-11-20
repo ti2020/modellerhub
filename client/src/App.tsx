@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Courses from "./pages/Courses";
 import Events from "./pages/Events";
 import Batches from "./pages/Batches";
+import SunBatch from "./pages/SunBatch";
 import About from "./pages/About";
 import Mission from "./pages/Mission";
 import Modeling from "./pages/Modeling";
@@ -26,6 +27,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/courses" component={Courses} />
       <Route path="/events" component={Events} />
+      <Route path="/batches/sun" component={SunBatch} />
       <Route path="/batches" component={Batches} />
       <Route path="/about" component={About} />
       <Route path="/mission" component={Mission} />
