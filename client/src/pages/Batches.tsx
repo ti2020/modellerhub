@@ -46,7 +46,7 @@ export default function Batches() {
           <a className={`block mb-10 rounded-xl bg-[#002B5C] text-white p-6 hover:bg-[#003a7a] transition-colors ${isRTL ? 'text-right' : ''}`}>
             <p className="text-[#C5A065] font-semibold">{isRTL ? 'الدفعة 1 · الشمس' : 'Batch 1 · Sun'}</p>
             <p className="text-2xl font-bold mt-1">{isRTL ? 'نموذج القوائم المالية الثلاث المتكاملة – AFM' : 'AFM Integrated Three-Statement Model'}</p>
-            <p className="text-white/80 mt-2">{isRTL ? 'الجلسة التعريفية: ديسمبر 2026 · عرض التفاصيل ←' : 'Orientation: December 2026 · See details →'}</p>
+            <p className="text-white/80 mt-2">{isRTL ? 'الجلسة التعريفية: ديسمبر 2026 · التفاصيل والتسجيل ←' : 'Orientation: December 2026 · Details and registration →'}</p>
           </a>
         </Link>
 
