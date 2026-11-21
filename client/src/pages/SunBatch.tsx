@@ -1,11 +1,10 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Link } from 'wouter';
+import { REGISTER_CALL_URL, REGISTER_LOCATION_URL, REGISTER_PHONE, TELEGRAM_URL, registerWhatsAppUrl } from '@/const';
 
 // Sun batch (Batch 1) of the AFM Integrated Three-Statement Model course.
 // Content lives here (not in LanguageContext) so the batch page can be edited in one place.
 // Price is intentionally absent until agreed with the institute.
-
-const TELEGRAM_BOT = 'https://t.me/Modeller_AFM_bot';
 
 type Week = { en: [string, string]; ar: [string, string] };
 
@@ -76,8 +75,13 @@ const COPY = {
     prereqs: ['Windows 10 or 11', 'Intel Core i5 or newer', 'Excel 2019 or newer', 'A Telegram account and an email address'],
     afterTitle: 'After the course',
     after: 'A staged library of 15–16 practice models with check files, Telegram support, guidance on the FMI scholarship application and reminders up to the exam.',
-    admission: 'Admission is selective and handled by the institute. A batch runs with at least 8 students.',
-    cta: 'Open the course bot',
+    admission: 'Admission is selective. A batch runs with at least 8 students.',
+    registerTitle: 'Register',
+    registerText: 'Registration is through SME (Subject Matter Experts Center). Message them on WhatsApp, or call the same number.',
+    whatsapp: 'Register on WhatsApp',
+    call: 'Call',
+    location: 'SME location',
+    cta: 'Course bot on Telegram',
   },
   ar: {
     back: 'كل الدفعات',
@@ -110,8 +114,13 @@ const COPY = {
     prereqs: ['Windows 10 أو 11', 'معالج Intel Core i5 أو أحدث', 'Excel 2019 أو أحدث', 'حساب تيليجرام وبريد إلكتروني'],
     afterTitle: 'بعد الدورة',
     after: 'مكتبة مرحلية من 15–16 نموذجاً تدريبياً مع ملفات فحص، دعم عبر تيليجرام، توجيه في طلب منحة FMI، وتذكيرات حتى موعد الاختبار.',
-    admission: 'القبول انتقائي ويتولاه المعهد. تنطلق الدفعة بحد أدنى 8 طلاب.',
-    cta: 'افتح بوت الدورة',
+    admission: 'القبول انتقائي. تنطلق الدفعة بحد أدنى 8 طلاب.',
+    registerTitle: 'التسجيل',
+    registerText: 'التسجيل عبر مركز SME (Subject Matter Experts Center). راسلهم عبر واتساب، أو اتصل على الرقم نفسه.',
+    whatsapp: 'سجّل عبر واتساب',
+    call: 'اتصال',
+    location: 'موقع مركز SME',
+    cta: 'بوت الدورة على تيليجرام',
   },
 };
 
@@ -222,16 +231,42 @@ export default function SunBatch() {
           </div>
         </section>
 
-        <section className={`bg-white rounded-lg p-8 flex flex-col md:flex-row gap-6 md:items-center md:justify-between ${align}`}>
-          <p className="text-gray-700 max-w-xl">{c.admission}</p>
-          <a
-            href={TELEGRAM_BOT}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-[#C5A065] hover:bg-[#b08b52] text-[#002B5C] font-semibold px-6 py-3 rounded-md text-center"
-          >
-            {c.cta}
-          </a>
+        <section id="register" className={`bg-white rounded-lg p-8 ${align}`}>
+          <h2 className="text-2xl font-bold text-[#002B5C]">{c.registerTitle}</h2>
+          <p className="text-gray-700 mt-2 max-w-2xl">{c.registerText}</p>
+          <p className="text-gray-500 text-sm mt-1 max-w-2xl">{c.admission}</p>
+          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+            <a
+              href={registerWhatsAppUrl(lang)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-[#25D366] hover:bg-[#1ebe5b] text-[#0b3d20] font-semibold px-6 py-3 rounded-md text-center"
+            >
+              {c.whatsapp}
+            </a>
+            <a
+              href={REGISTER_CALL_URL}
+              className="inline-block border border-[#002B5C] text-[#002B5C] hover:bg-[#002B5C] hover:text-white font-semibold px-6 py-3 rounded-md text-center"
+            >
+              {c.call} <bdi dir="ltr">{REGISTER_PHONE.replace(/^\+(\d{2})(\d{2})(\d+)$/, '+$1 $2 $3')}</bdi>
+            </a>
+            <a
+              href={REGISTER_LOCATION_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-[#002B5C] underline underline-offset-4 px-2 py-3 text-center"
+            >
+              {c.location}
+            </a>
+            <a
+              href={TELEGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-[#002B5C] underline underline-offset-4 px-2 py-3 text-center"
+            >
+              {c.cta}
+            </a>
+          </div>
         </section>
       </div>
     </div>
