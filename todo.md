@@ -38,10 +38,10 @@
 - [x] Implement admin authentication and authorization
 - [x] Create admin dashboard layout with navigation
 - [x] Build courses management interface (CRUD operations)
-- [ ] Build events management interface (CRUD operations)
-- [ ] Build batches management interface (CRUD operations)
-- [ ] Build team members management interface (CRUD operations)
-- [ ] Build community info management interface (mission, vision, modelling field)
+- [x] Build events management interface (CRUD operations)
+- [x] Build batches management interface (CRUD operations)
+- [x] Build team members management interface (CRUD operations)
+- [x] Build community info management interface (mission, vision, modelling field)
 - [x] Add form validation and error handling
 - [ ] Implement image upload functionality for team photos
 - [ ] Add bulk import/export for content management

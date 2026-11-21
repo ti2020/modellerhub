@@ -1,4 +1,4 @@
-import { eq, isNull } from "drizzle-orm";
+import { and, asc, eq, isNull } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, courses, events, batches, teamMembers, communityInfo } from "../drizzle/schema";
 
@@ -89,11 +89,10 @@ export async function getUserByOpenId(openId: string) {
 export async function getCourses(featured?: boolean) {
   const db = await getDb();
   if (!db) return [];
-  const query = db.select().from(courses).where(isNull(courses.deletedAt));
-  if (featured) {
-    return await db.select().from(courses).where(isNull(courses.deletedAt));
-  }
-  return await query;
+  const where = featured
+    ? and(isNull(courses.deletedAt), eq(courses.featured, 1))
+    : isNull(courses.deletedAt);
+  return await db.select().from(courses).where(where);
 }
 
 export async function getCourseById(id: number) {
@@ -107,11 +106,10 @@ export async function getCourseById(id: number) {
 export async function getEvents(featured?: boolean) {
   const db = await getDb();
   if (!db) return [];
-  const query = db.select().from(events).where(isNull(events.deletedAt));
-  if (featured) {
-    return await db.select().from(events).where(isNull(events.deletedAt));
-  }
-  return await query;
+  const where = featured
+    ? and(isNull(events.deletedAt), eq(events.featured, 1))
+    : isNull(events.deletedAt);
+  return await db.select().from(events).where(where).orderBy(asc(events.eventDate));
 }
 
 export async function getEventById(id: number) {
@@ -125,7 +123,7 @@ export async function getEventById(id: number) {
 export async function getBatches() {
   const db = await getDb();
   if (!db) return [];
-  return await db.select().from(batches).where(isNull(batches.deletedAt));
+  return await db.select().from(batches).where(isNull(batches.deletedAt)).orderBy(asc(batches.startDate));
 }
 
 export async function getBatchById(id: number) {
