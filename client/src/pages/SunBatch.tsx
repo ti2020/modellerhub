@@ -1,6 +1,6 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Link } from 'wouter';
-import { REGISTER_CALL_URL, REGISTER_PHONE, TELEGRAM_URL, registerWhatsAppUrl } from '@/const';
+import { REGISTER_CALL_URL, REGISTER_LOCATION_URL, REGISTER_PHONE, TELEGRAM_URL, registerWhatsAppUrl } from '@/const';
 
 // Sun batch (Batch 1) of the AFM Integrated Three-Statement Model course.
 // Content lives here (not in LanguageContext) so the batch page can be edited in one place.
@@ -75,11 +75,12 @@ const COPY = {
     prereqs: ['Windows 10 or 11', 'Intel Core i5 or newer', 'Excel 2019 or newer', 'A Telegram account and an email address'],
     afterTitle: 'After the course',
     after: 'A staged library of 15–16 practice models with check files, Telegram support, guidance on the FMI scholarship application and reminders up to the exam.',
-    admission: 'Admission is selective and handled by our partner institute. A batch runs with at least 8 students.',
+    admission: 'Admission is selective. A batch runs with at least 8 students.',
     registerTitle: 'Register',
-    registerText: 'Message our partner institute on WhatsApp to register, or call the same number.',
+    registerText: 'Registration is through SME (Subject Matter Experts Center). Message them on WhatsApp, or call the same number.',
     whatsapp: 'Register on WhatsApp',
     call: 'Call',
+    location: 'SME location',
     cta: 'Course bot on Telegram',
   },
   ar: {
@@ -113,11 +114,12 @@ const COPY = {
     prereqs: ['Windows 10 أو 11', 'معالج Intel Core i5 أو أحدث', 'Excel 2019 أو أحدث', 'حساب تيليجرام وبريد إلكتروني'],
     afterTitle: 'بعد الدورة',
     after: 'مكتبة مرحلية من 15–16 نموذجاً تدريبياً مع ملفات فحص، دعم عبر تيليجرام، توجيه في طلب منحة FMI، وتذكيرات حتى موعد الاختبار.',
-    admission: 'القبول انتقائي ويتولاه المعهد الشريك. تنطلق الدفعة بحد أدنى 8 طلاب.',
+    admission: 'القبول انتقائي. تنطلق الدفعة بحد أدنى 8 طلاب.',
     registerTitle: 'التسجيل',
-    registerText: 'راسل المعهد الشريك عبر واتساب للتسجيل، أو اتصل على الرقم نفسه.',
+    registerText: 'التسجيل عبر مركز SME (Subject Matter Experts Center). راسلهم عبر واتساب، أو اتصل على الرقم نفسه.',
     whatsapp: 'سجّل عبر واتساب',
     call: 'اتصال',
+    location: 'موقع مركز SME',
     cta: 'بوت الدورة على تيليجرام',
   },
 };
@@ -247,6 +249,14 @@ export default function SunBatch() {
               className="inline-block border border-[#002B5C] text-[#002B5C] hover:bg-[#002B5C] hover:text-white font-semibold px-6 py-3 rounded-md text-center"
             >
               {c.call} <bdi dir="ltr">{REGISTER_PHONE.replace(/^\+(\d{2})(\d{2})(\d+)$/, '+$1 $2 $3')}</bdi>
+            </a>
+            <a
+              href={REGISTER_LOCATION_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-[#002B5C] underline underline-offset-4 px-2 py-3 text-center"
+            >
+              {c.location}
             </a>
             <a
               href={TELEGRAM_URL}

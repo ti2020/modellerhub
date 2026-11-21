@@ -6,8 +6,8 @@ export const getLoginUrl = () => "/api/auth/google";
 // Community entry point: the Modeller Hub Telegram bot (announcements, submissions).
 export const TELEGRAM_URL = "https://t.me/Modeller_AFM_bot";
 
-// Registration goes through the partner institute's WhatsApp line (also takes calls).
-// The institute is deliberately not named on the site until the agreement is signed.
+// Registration goes through SME (Subject Matter Experts Center): WhatsApp line, also takes calls.
+export const REGISTER_LOCATION_URL = "https://maps.app.goo.gl/bmsSygEc9rQG5j899";
 export const REGISTER_PHONE = "+201100808651";
 const registerText = {
   en: "Hello, I would like to register for the AFM Integrated Three-Statement Model course (Batch 1 · Sun).",
